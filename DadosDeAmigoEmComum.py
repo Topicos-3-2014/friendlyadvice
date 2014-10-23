@@ -21,3 +21,12 @@ class DadosDeAmigoEmComum:
 
     def getCoisasEmComum(self):
         return self.coisasEmComum
+    
+    def imprimirDadosDeAmigoEmComum():
+        print '---------------'
+        print "nota de compatibilidade=", self.notaDeCompatibilidade
+        print '---------------'
+        print '---------------'
+        print "coisas(likes, amigos) em comum entre eles:"
+        self.coisasEmComum
+        print '---------------'
