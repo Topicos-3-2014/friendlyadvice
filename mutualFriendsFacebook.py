@@ -16,7 +16,7 @@ import requests # pip install requests
 # Keep in mind that you could have just gone to https://developers.facebook.com/tools/access_token/
 # and retrieved the "User Token" value from the Access Token Tool
 
-ACCESS_TOKEN = 'CAACEdEose0cBAFGip8ujPllVfirRb7khet0xGWAmhY619oVZC5YqJSfUztqcLteFQDhZCXTRMp3GuR5XyXcVwGKmbL2WiESBczLROSq6Al2lLi3RK57YYMscxZCVGpB5N7asDmSOOMVOxW33auZBjEEeTebFD78qxFHppUorx97WhmZAJxYSAiGrXjmx10gy96tpAnbXiSSPpYZByWiG8K'
+ACCESS_TOKEN = 'CAACEdEose0cBAOjoevkLY5P0cag0N6KmjlEQYGpNPYB9vluvqqYlWKlRrYln95Me4iOSTrD5FOLwtUcFSWVeZBJFJdHMwhwnxZA9HQ5ByC1ZCheD5171y18spqiekXhOYK0231ZBZBtChZBBkjWIlhT4AzkkzazWoFb3Siqo0zZCuT0vn7e5FOY0aFPglWgqgkyzNox5T0G1pgVMch96kak'
 
 
 
@@ -38,15 +38,38 @@ def achar_compatibilidade_por_amigos_mutuos(nome_do_amigo_analizado):
         mutual_friends[friend_name] = [ data['name'] 
                                     for data in response_data ]
     amigos_do_amigo_analizado = mutual_friends[nome_do_amigo_analizado]
-    quantos_amigos_amigo_analizado_tem = len(amigos_do_amigo_analizado)
     notas_compatibilidade_com_meus_amigos = {}
     for friend_name in friends:
         soh_o_nome_de_um_amigo = friend_name[1]
-        amigos_mutuos_de_um_amigo = mutual_friends[soh_o_nome_de_um_amigo] #array
-        notas_compatibilidade_com_meus_amigos[soh_o_nome_de_um_amigo] = DadosDeAmigoEmComum(0, [])
+        soh_o_nome_de_um_amigo_unicode = soh_o_nome_de_um_amigo.encode('utf-8')
+        if(soh_o_nome_de_um_amigo_unicode != nome_do_amigo_analizado):
+             amigos_mutuos_de_um_amigo = mutual_friends[soh_o_nome_de_um_amigo] #array
+             #notas_compatibilidade_com_meus_amigos[soh_o_nome_de_um_amigo] = DadosDeAmigoEmComum(0, [])
+             lista_amigos_em_comum = []        
+             for um_amigo_do_amigo_analizado in amigos_do_amigo_analizado:
+                 for um_amigo_mutuo_de_um_amigo_qualquer in amigos_mutuos_de_um_amigo:
+                     if(um_amigo_do_amigo_analizado == um_amigo_mutuo_de_um_amigo_qualquer):
+                         um_amigo_em_comum_utf8 = um_amigo_do_amigo_analizado.encode('utf-8')
+                         lista_amigos_em_comum.append(um_amigo_em_comum_utf8)
+             #achados todos os amigos em comum, vamos calcular a nota de compatibilidade por amigos mutuos
+             quantos_amigos_amigo_analizado_tem = len(amigos_do_amigo_analizado)
+             quantos_amigos_em_comum = len(lista_amigos_em_comum)
+             notaDeCompatibilidade = (10 *   quantos_amigos_em_comum) / quantos_amigos_amigo_analizado_tem
+             #e adicionar uma nova entrada no dicionário de compatibilidade do cara com meus amigos
+             novaEntradaDadosDeAmigoEmComum = DadosDeAmigoEmComum(notaDeCompatibilidade, lista_amigos_em_comum)
+             notas_compatibilidade_com_meus_amigos[soh_o_nome_de_um_amigo] = novaEntradaDadosDeAmigoEmComum
+    
     #print mutual_friends
     return notas_compatibilidade_com_meus_amigos
 
 
-print achar_compatibilidade_por_amigos_mutuos("Valmiro Zuno Ribeiro")
-    
+
+print "%%%%%%%%%%%%%%%%% Meu amigo Valmiro Zuno Ribeiro %%%%%%%%%%%%%%%%%%%%%%"    
+notas_de_compatibilidade_com_amigos =  achar_compatibilidade_por_amigos_mutuos("Valmiro Zuno Ribeiro")
+for nomes_de_amigos in notas_de_compatibilidade_com_amigos.keys():
+    print "<<<<<<<<<<<<<>>>>>>>>>>>>>>>>"    
+    print "<<<<<<<<<<<<<>>>>>>>>>>>>>>>>"
+    print "Amigo Comparado:", nomes_de_amigos
+    print "<<<<<<<<<<<<<>>>>>>>>>>>>>>>>"
+    notas_de_compatibilidade_com_amigos[nomes_de_amigos].imprimirDadosDeAmigoEmComum()
+    print "<<<<<<<<<<<<<>>>>>>>>>>>>>>>>"
