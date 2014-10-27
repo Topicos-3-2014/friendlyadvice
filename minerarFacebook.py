@@ -13,8 +13,15 @@ ACCESS_TOKEN = 'CAACEdEose0cBANIxmlZB6X3CStguIaY8nSlkAxC8izKcDaqCooOvO18QnX8zXPd
 
 import facebook # pip install facebook-sdk
 import json
+import time
+from datetime import date
+from datetime import datetime
 
 # A helper function to pretty-print Python objects as JSON
+
+def calculate_age(born):
+    today = date.today()
+    return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
 
 def pp(o): 
     print json.dumps(o, indent=1)
@@ -47,4 +54,10 @@ print '---------------'
 friends = g.get_connections("me", "friends", fields="birthday, name")
 for fr in friends['data']:
     if 'birthday' in fr:
-        print fr['name'] + ' ' + fr['birthday']
+        data_nascimento = fr['birthday']
+        quantas_barras_na_data_de_nascimento = data_nascimento.count('/')
+        if(quantas_barras_na_data_de_nascimento == 2):
+            data_nascimento_convertido_em_date = datetime.strptime(data_nascimento, '%m/%d/%Y')
+            idade_pessoa = calculate_age(data_nascimento_convertido_em_date)
+            print fr['name'] + ' ' + fr['birthday'] + ' ' + str(idade_pessoa) + ' anos'
+            
