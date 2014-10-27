@@ -9,7 +9,7 @@ Created on Wed Oct 15 21:25:41 2014
 # Keep in mind that you could have just gone to https://developers.facebook.com/tools/access_token/
 # and retrieved the "User Token" value from the Access Token Tool
 
-ACCESS_TOKEN = 'CAACEdEose0cBAGpVlbzUf2ZCaXFaa7v5ZAl2VQ9lYvZCu04mTB72lPfYQgvp95jcPmhnAstnH54o6qzoymvrKQrLpQ2qL0oBPzJ5dgofiWhmhqlcMZAkvX0Bt3wnZBNKolhJzwXmiWxW5pXIaKgAsJrQi3K3VEfXejFI1h3XkxSgIjX2o8RxJkyEg2RTQ5ClGE7IZB4bKLGuZBoEAYw6F1g'
+ACCESS_TOKEN = 'CAACEdEose0cBANIxmlZB6X3CStguIaY8nSlkAxC8izKcDaqCooOvO18QnX8zXPdaRbzmjGk0sSkunznM9bXdZAF19svnMOpZAVnimnwRphcmtgtgZAsIx0FSmJRpNhBHYJVzHFNT3XcAjxC5xJXIHKs37ZB526r5ehkrAGZCqZC0ZARiZAmCwdwR6zHFJD1DPSPbDJrnqhFe917KHw1HnffhE'
 
 import facebook # pip install facebook-sdk
 import json
@@ -39,15 +39,12 @@ print 'Cassio'
 print '---------------'
 pp(g.get_object('100003138583807'))
 print
+
+print
 print '---------------'
-print 'Social Web'
+print 'birthday'
 print '---------------'
-pp(g.request("search", {'q' : 'social web', 'type' : 'page'}))
-
-print '----------all my friends likes------------'
-friends = g.get_connections("me", "friends")['data']
-
-likes = { friend['name'] : g.get_connections(friend['id'], "likes")['data'] 
-          for friend in friends }
-
-print likes
+friends = g.get_connections("me", "friends", fields="birthday, name")
+for fr in friends['data']:
+    if 'birthday' in fr:
+        print fr['name'] + ' ' + fr['birthday']
