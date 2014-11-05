@@ -144,7 +144,7 @@ class CalculaAfinidadeEntreAmigos:
         return pessoasCompativeisComMeuAmigoSegundoEscolas
             
 #os testes...
-calculaAfinidades = CalculaAfinidadeEntreAmigos('CAACEdEose0cBAHsQafaZCxAMZAl4ZC9d4Un7g3hZAwrne5g2lrXT0GpjZARPW7meVEV9m7IOj5yDfLN0y2AUbKx2oQCnnrZB0lCivfLbsbHbY7LncNDntG8TjYrhiTenJBdlB8MKUaH2qDwoPc7jZAMFHLEhcW4S0oPk4TrqR6jHjW0d3ZCnZAINLa7UiiCJP6btMUY5Sg7GQPuZA9X03tu1QwBUDkKrRajLgZD')
+calculaAfinidades = CalculaAfinidadeEntreAmigos('CAACEdEose0cBAEaDEu5PFIXcBhYpl4jhBMqcJYjPpi7wlw8TeWTFTyPPNFoqGlitoeVIgbvVqZCZBv4IhTTxEZCgosQsZCdAnKzAVyCtjqwUtvCHMJ4JnrYt2Tm3FuQX7ZAUL09nwbD4lrhw1qsZCG7ZBrD23Ia2nC6NxRfDd66rDTqlhiiFm2UwrqnWIXi9TDokOypKOgS8IQSeCr5ipNE')
 """amigosDePhillipEmComum = calculaAfinidades.acharCompatibilidadeEntreLikesDePaginas("Fábio Phillip Rocha Marques")
 #faltou pegar o jeito de imprimir esse resultado de phillip
 
@@ -159,10 +159,10 @@ for amigoEmComum in amigosDePhillipEmComumLocalidades.keys():
     print "######" , amigoEmComum
     amigosDePhillipEmComumLocalidades[amigoEmComum].imprimirDadosDeAmigoEmComum();"""
 
-print "!!!!!!!!!!!!!!!!! ESCOLAS DE FÁBIO PHILLIP !!!!!!!!!!!!!!!!!"
+"""print "!!!!!!!!!!!!!!!!! ESCOLAS DE FÁBIO PHILLIP !!!!!!!!!!!!!!!!!"
 print calculaAfinidades.amigosEEscolas["Fábio Phillip Rocha Marques"]
 amigosDePhillipEmComumEscolas = calculaAfinidades.acharCompatibilidadeEntreEscolas("Fábio Phillip Rocha Marques")
 print "!!!!!!!!!!!!!!!amigos com mesmas escolas de meu amigo Fábio Phillip!!!!!!!!!!!!!!!"
 for amigoEmComum in amigosDePhillipEmComumEscolas.keys():
     print "######" , amigoEmComum
-    amigosDePhillipEmComumEscolas[amigoEmComum].imprimirDadosDeAmigoEmComum();
+    amigosDePhillipEmComumEscolas[amigoEmComum].imprimirDadosDeAmigoEmComum();"""
