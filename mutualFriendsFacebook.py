@@ -1,9 +1,8 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+# coding: iso-8859-1 -*-
 """
 Created on Wed Oct 15 21:58:31 2014
 
-@author: F√°bioPhillip
+@author: F·bioPhillip
 """
 
 from DadosDeAmigoEmComum import DadosDeAmigoEmComum #deixar na mesma pasta
@@ -16,10 +15,28 @@ import requests # pip install requests
 # Keep in mind that you could have just gone to https://developers.facebook.com/tools/access_token/
 # and retrieved the "User Token" value from the Access Token Tool
 
-ACCESS_TOKEN = 'CAACEdEose0cBAOjoevkLY5P0cag0N6KmjlEQYGpNPYB9vluvqqYlWKlRrYln95Me4iOSTrD5FOLwtUcFSWVeZBJFJdHMwhwnxZA9HQ5ByC1ZCheD5171y18spqiekXhOYK0231ZBZBtChZBBkjWIlhT4AzkkzazWoFb3Siqo0zZCuT0vn7e5FOY0aFPglWgqgkyzNox5T0G1pgVMch96kak'
+ACCESS_TOKEN = 'CAACEdEose0cBACZAtcfQFeRK0fnwtGozQXkjZCMjOeFC4Et5LTZCGjdkw6gUpZBJahfKedF9iGNu4b2Y7CbF0ZC0lmtIyhtIp9eRAO7hZCha3HQLkZCraZAXYPm6ZAEr80k5pq7hqBdcmFKzRyhZA39MRWOZCfhRplNlkYVx9An4DUagoO7ZBELz8b3ZCFxVY8G6cJLvFtTlaXpt19CF2cUKZBjXDv'
 
 
-
+def achar_compatibilidade_por_amigos_mutuos_todos_os_amigos():
+    g = facebook.GraphAPI(ACCESS_TOKEN)
+    friends = [ (friend['id'], friend['name'],)
+                for friend in g.get_connections('me', 'friends')['data'] ]
+    for friend_name in friends:
+        soh_o_nome_de_um_amigo = friend_name[1]
+        print "%%%%%%%%%%%%%%%%% Meu amigo ", soh_o_nome_de_um_amigo ,"%%%%%%%%%%%%%%%%%%%%%%" 
+        notas_de_compatibilidade_com_amigos =  achar_compatibilidade_por_amigos_mutuos(soh_o_nome_de_um_amigo)
+        for nomes_de_amigos in notas_de_compatibilidade_com_amigos.keys():
+            print "<<<<<<<<<<<<<>>>>>>>>>>>>>>>>"    
+            print "<<<<<<<<<<<<<>>>>>>>>>>>>>>>>"
+            print "Amigo Comparado:", nomes_de_amigos
+            print "<<<<<<<<<<<<<>>>>>>>>>>>>>>>>"
+            notas_de_compatibilidade_com_amigos[nomes_de_amigos].imprimirDadosDeAmigoEmComum()
+            print "<<<<<<<<<<<<<>>>>>>>>>>>>>>>>"
+        print "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+        
+        
+    
 
 
 def achar_compatibilidade_por_amigos_mutuos(nome_do_amigo_analizado):
@@ -55,7 +72,7 @@ def achar_compatibilidade_por_amigos_mutuos(nome_do_amigo_analizado):
              quantos_amigos_amigo_analizado_tem = len(amigos_do_amigo_analizado)
              quantos_amigos_em_comum = len(lista_amigos_em_comum)
              notaDeCompatibilidade = (10 *   quantos_amigos_em_comum) / quantos_amigos_amigo_analizado_tem
-             #e adicionar uma nova entrada no dicion√°rio de compatibilidade do cara com meus amigos
+             #e adicionar uma nova entrada no dicion·rio de compatibilidade do cara com meus amigos
              novaEntradaDadosDeAmigoEmComum = DadosDeAmigoEmComum(notaDeCompatibilidade, lista_amigos_em_comum)
              notas_compatibilidade_com_meus_amigos[soh_o_nome_de_um_amigo] = novaEntradaDadosDeAmigoEmComum
     
@@ -64,8 +81,10 @@ def achar_compatibilidade_por_amigos_mutuos(nome_do_amigo_analizado):
 
 
 
-print "%%%%%%%%%%%%%%%%% Meu amigo Valmiro Zuno Ribeiro %%%%%%%%%%%%%%%%%%%%%%"    
-notas_de_compatibilidade_com_amigos =  achar_compatibilidade_por_amigos_mutuos("Valmiro Zuno Ribeiro")
+
+
+print "%%%%%%%%%%%%%%%%% Meu amigo Fabio Andrews %%%%%%%%%%%%%%%%%%%%%%"    
+notas_de_compatibilidade_com_amigos =  achar_compatibilidade_por_amigos_mutuos("F·bio Andrews Rocha Marques")
 for nomes_de_amigos in notas_de_compatibilidade_com_amigos.keys():
     print "<<<<<<<<<<<<<>>>>>>>>>>>>>>>>"    
     print "<<<<<<<<<<<<<>>>>>>>>>>>>>>>>"
