@@ -1,13 +1,13 @@
-# -*- coding: utf-8 -*-
+# coding: iso-8859-1 -*-
 """
 Created on Wed Oct 22 21:49:24 2014
 
-@author: fÃ¡bioandrews
+@author: fábioandrews
 """
 import facebook
 from DadosDeAmigoEmComum import DadosDeAmigoEmComum 
 
-class CalculaAfinidadeEntreAmigos:
+class AfinidadeLikesEscolaELocalidades:
     def __init__(self,ACCESS_TOKEN_FACEBOOK):
         self.token_do_facebook = ACCESS_TOKEN_FACEBOOK
         self.meusAmigos = []
@@ -32,8 +32,8 @@ class CalculaAfinidadeEntreAmigos:
             likes_de_um_amigo = likesDeMeusAmigosComCategoriasDataECoisasInuteis[nomeAmigo]
             for umLike in likes_de_um_amigo:
                 umLikeSimplificado = umLike['name']
-                nomeAmigoEmUTf8 = nomeAmigo.encode("utf-8") #estava retornando u'stringqualquer' se eu nao fizesse isso. Eh um tipo diferente de string normal
-                umLikeSimplificadoEmUtf8 = umLikeSimplificado.encode("utf-8")
+                nomeAmigoEmUTf8 = nomeAmigo.encode(encoding='utf_8',errors='ignore') #estava retornando u'stringqualquer' se eu nao fizesse isso. Eh um tipo diferente de string normal
+                umLikeSimplificadoEmUtf8 = umLikeSimplificado.encode(encoding='utf_8',errors='ignore')
                 if(nomeAmigoEmUTf8 not in amigos_e_likes_simplificados.keys()):
                     amigos_e_likes_simplificados[nomeAmigoEmUTf8] = [umLikeSimplificadoEmUtf8]
                 else:
@@ -49,8 +49,8 @@ class CalculaAfinidadeEntreAmigos:
         for fr in amigosELocalizacoesComplexo['data']:
             if 'location' in fr:
                 #print fr['name'] + ' ' + fr['location']["name"] #location eh um dictionary com chaves id e name, referentes a uma localidade
-                nomeAmigoUtf8 = fr['name'].encode("utf-8")  
-                localidadeUtf8 = fr['location']["name"].encode("utf-8")
+                nomeAmigoUtf8 = fr['name'].encode(encoding='utf_8',errors='ignore')  
+                localidadeUtf8 = fr['location']["name"].encode(encoding='utf_8',errors='ignore')
                 amigos_e_localidades[nomeAmigoUtf8] = localidadeUtf8 #location eh um dictionary com chaves id e name, referentes a uma localidade
         self.amigosELocalidades = amigos_e_localidades
 
@@ -61,12 +61,12 @@ class CalculaAfinidadeEntreAmigos:
         amigos_e_escolas = dict() #eh um dictionary que relaciona o nome de um amigo com as escolas dele, Pode ter duas: college ou high school, por isso o valor nesse dict serah um arranjo tipo ["High School%Maria Auxilidadora","college%Federal University of Rio Grande do Norte"]               
         for fr in amigosEEscolasComplexo['data']:
             if 'education' in fr:
-                nomeAmigoUtf8 = fr['name'].encode("utf-8")
+                nomeAmigoUtf8 = fr['name'].encode(encoding='utf_8',errors='ignore')
                 arranjoEducation = fr['education'] #uma pessoa pode ter varios high school ou college e tb pode ter graduate school
                 arranjoEducacaoMeuAmigo = []                
                 for elementoArranjoEducation in arranjoEducation:
-                    nomeEscola = elementoArranjoEducation['school']['name'].encode("utf-8")
-                    tipoEscola = elementoArranjoEducation['type'].encode("utf-8") #pode ser high school ou college ou Graduate school. College eh a faculdade
+                    nomeEscola = elementoArranjoEducation['school']['name'].encode(encoding='utf_8',errors='ignore')
+                    tipoEscola = elementoArranjoEducation['type'].encode(encoding='utf_8',errors='ignore') #pode ser high school ou college ou Graduate school. College eh a faculdade
                     arranjoEducacaoMeuAmigo.append(tipoEscola + "%" + nomeEscola)
                 amigos_e_escolas[nomeAmigoUtf8] = arranjoEducacaoMeuAmigo
         self.amigosEEscolas = amigos_e_escolas
@@ -74,6 +74,7 @@ class CalculaAfinidadeEntreAmigos:
     #dado um amigo, eu irei receber tipo {giovanni:DadosDeAmigoEmComum}, onde giovanni eh amigo de meuAmigo
     #e DadosDeAmigoEmComum terah a nota associada e um arranjo com os likes que giovanni tem em comum com meuAmigo
     def acharCompatibilidadeEntreLikesDePaginas(self,meuAmigo):
+        meuAmigo = meuAmigo.encode(encoding='utf_8',errors='ignore')
         pessoasDeMesmoInteresseDeMeuAmigoEQuaisInteresses = dict()
         for outroAmigo in self.amigosECoisasQueGostam.keys():
             if(outroAmigo != meuAmigo):
@@ -100,7 +101,7 @@ class CalculaAfinidadeEntreAmigos:
         return pessoasCompativeisComMeuAmigoSegundoLikes
     
     def acharCompatibilidadeEntreLocalidade(self,meuAmigo):
-        #print self.amigosELocalidades
+        meuAmigo = meuAmigo.encode(encoding='utf_8',errors='ignore')
         pessoasDeMesmaLocalidadeDeMeuAmigoEQualLocalidade = dict()
         for outroAmigo in self.amigosELocalidades.keys():
             if(outroAmigo != meuAmigo):
@@ -119,6 +120,7 @@ class CalculaAfinidadeEntreAmigos:
         return pessoasCompativeisComMeuAmigoSegundoLocalidade
         
     def acharCompatibilidadeEntreEscolas(self,meuAmigo):
+        meuAmigo = meuAmigo.encode(encoding='utf_8',errors='ignore')
         pessoasDeMesmasEscolasDeMeuAmigoEQuaisEscolas = dict()
         for outroAmigo in self.amigosEEscolas.keys():
             if(outroAmigo != meuAmigo):
@@ -144,25 +146,25 @@ class CalculaAfinidadeEntreAmigos:
         return pessoasCompativeisComMeuAmigoSegundoEscolas
             
 #os testes...
-calculaAfinidades = CalculaAfinidadeEntreAmigos('CAACEdEose0cBAEaDEu5PFIXcBhYpl4jhBMqcJYjPpi7wlw8TeWTFTyPPNFoqGlitoeVIgbvVqZCZBv4IhTTxEZCgosQsZCdAnKzAVyCtjqwUtvCHMJ4JnrYt2Tm3FuQX7ZAUL09nwbD4lrhw1qsZCG7ZBrD23Ia2nC6NxRfDd66rDTqlhiiFm2UwrqnWIXi9TDokOypKOgS8IQSeCr5ipNE')
-"""amigosDePhillipEmComum = calculaAfinidades.acharCompatibilidadeEntreLikesDePaginas("FÃ¡bio Phillip Rocha Marques")
+"""calculaAfinidades = AfinidadeLikesEscolaELocalidades('CAACEdEose0cBAG2OxI7v1nXVTzIX4JCoPSZByGR4OOr9leuRT2cjmNYo7nLg1sf9lRQstvd0HaIZCa1T9mK68GynHqqzhD5u6cCZATHZBrX99fHpWPBrM6NpTVKEXYNi5l45fk6ZAi87i8psDDAtOtjzA8hnymZAeN77LV3p2DtODu9l1na4gCz8hkgeHBHDjFC6TnVVFd8iivK0uhZAZBre')
+amigosDePhillipEmComum = calculaAfinidades.acharCompatibilidadeEntreLikesDePaginas("Fábio Phillip Rocha Marques")
 #faltou pegar o jeito de imprimir esse resultado de phillip
 
-print "!!!!!!!!!!!!!!!amigos com mesmos likes de meu amigo FÃ¡bio Phillip!!!!!!!!!!!!!!!"
+print "!!!!!!!!!!!!!!!amigos com mesmos likes de meu amigo Fábio Phillip!!!!!!!!!!!!!!!"
 for amigoEmComum in amigosDePhillipEmComum.keys():
     print "######" , amigoEmComum
     amigosDePhillipEmComum[amigoEmComum].imprimirDadosDeAmigoEmComum();"""
 
-"""amigosDePhillipEmComumLocalidades = calculaAfinidades.acharCompatibilidadeEntreLocalidade("FÃ¡bio Phillip Rocha Marques")
-print "!!!!!!!!!!!!!!!amigos com mesma localidade de meu amigo FÃ¡bio Phillip!!!!!!!!!!!!!!!"
+"""amigosDePhillipEmComumLocalidades = calculaAfinidades.acharCompatibilidadeEntreLocalidade("Fábio Phillip Rocha Marques")
+print "!!!!!!!!!!!!!!!amigos com mesma localidade de meu amigo Fábio Phillip!!!!!!!!!!!!!!!"
 for amigoEmComum in amigosDePhillipEmComumLocalidades.keys():
     print "######" , amigoEmComum
     amigosDePhillipEmComumLocalidades[amigoEmComum].imprimirDadosDeAmigoEmComum();"""
 
-"""print "!!!!!!!!!!!!!!!!! ESCOLAS DE FÃBIO PHILLIP !!!!!!!!!!!!!!!!!"
-print calculaAfinidades.amigosEEscolas["FÃ¡bio Phillip Rocha Marques"]
-amigosDePhillipEmComumEscolas = calculaAfinidades.acharCompatibilidadeEntreEscolas("FÃ¡bio Phillip Rocha Marques")
-print "!!!!!!!!!!!!!!!amigos com mesmas escolas de meu amigo FÃ¡bio Phillip!!!!!!!!!!!!!!!"
+"""print "!!!!!!!!!!!!!!!!! ESCOLAS DE FÁBIO PHILLIP !!!!!!!!!!!!!!!!!"
+print calculaAfinidades.amigosEEscolas["Fábio Phillip Rocha Marques"]
+amigosDePhillipEmComumEscolas = calculaAfinidades.acharCompatibilidadeEntreEscolas("Fábio Phillip Rocha Marques")
+print "!!!!!!!!!!!!!!!amigos com mesmas escolas de meu amigo Fábio Phillip!!!!!!!!!!!!!!!"
 for amigoEmComum in amigosDePhillipEmComumEscolas.keys():
     print "######" , amigoEmComum
     amigosDePhillipEmComumEscolas[amigoEmComum].imprimirDadosDeAmigoEmComum();"""
