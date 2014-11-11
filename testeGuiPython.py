@@ -10,33 +10,48 @@ import Tkinter
 #TUTORIAL : http://sebsauvage.net/python/gui/
 class simpleapp_tk(Tkinter.Tk):
 
-    access_token = "CAACEdEose0cBAOav6INdmezgkbolLolLE4X9GlfWFrIaMJV1xrT3SbnV6DX90JzZBGP47sS5vUqrWX1ZCLrYZBfZB7sGXl2mDuju21hhtFUnB2fjmZCuO3V02YjVe8BKQ6Y6XByAuk3DoukeWw47Kwx1pRJBP7v3lO2KsC2EXdQRBPIMDW9GYqJX2JXOGa2JaTUe40joZBzUeAZBq4sZA98z"    
+    access_token = "CAACEdEose0cBAL0jZBheRtdGJhBnMl77MuWrlBWDZAZBDZBNVXTawH6CXKr3ZBkui0INV69sp6sPLXKpVOiN2nYZCcaHTjWRK0GWPw88n1lG7zMoEYIHUUaqvbCt7qTZC4bct4ZAaeIxgOjRmbjWIPgIsrZABAUXZBt5dsUR7HebhJah9fEBZCPh1fT7ZBoFtgrhGHmaEujsbeSUCZCfsS8ZBSo5EY"    
+    # Use this as a flag to indicate if the box was clicked.    
     
     def __init__(self,parent):
         Tkinter.Tk.__init__(self,parent)
         self.parent = parent
         self.initialize()
+        
+    
 
     def initialize(self):
         self.grid()
+        
+        self.label_campo_access_token = Tkinter.Label(self, text="Access Token:")
+        self.label_campo_access_token.grid(column=0,row=0)
+        
+        self.label_campo_nome_amigo = Tkinter.Label(self, text="Nome do Amigo:")
+        self.label_campo_nome_amigo.grid(column=0,row=1)
+            
+        
+        self.accessTokenVariable = Tkinter.StringVar()
+        self.campoAccessToken = Tkinter.Entry(self,textvariable=self.accessTokenVariable)#Entry é um nome de Textfield da tela
+        self.campoAccessToken.grid(column=1,row=0,sticky='EW')#EW é pra ele grudar nas edges       
+        #self.campoAccessToken.set(u"Entre com seu access token")                
+        
         self.entryVariable = Tkinter.StringVar()
         self.entry = Tkinter.Entry(self,textvariable=self.entryVariable)#Entry é um nome de Textfield da tela
-        self.entry.grid(column=0,row=0,sticky='EW')#EW é pra ele grudar nas edges
-        self.entry.bind("<Return>", self.OnPressEnter)#dispara onPressEnter quando enter é pressionado no ttext field        
-        self.entryVariable.set(u"Entre com o nome do amigo que você quer convidar pra sair")        
+        self.entry.grid(column=1,row=1,sticky='EW')#EW é pra ele grudar nas edges
+        self.entry.bind("<Return>", self.OnPressEnter)#dispara onPressEnter quando enter é pressionado no ttext field              
         
         button = Tkinter.Button(self,text=u"Ver compatibilidade!",
                                 command=self.OnButtonClick)#botao clicavel dispara onButtonClick
-        button.grid(column=1,row=0)
+        button.grid(column=2,row=0, rowspan=2)
         self.labelVariable = Tkinter.StringVar()
         #label = Tkinter.Label(self,textvariable=self.labelVariable, # label que usa variável labelVariable como texto
                               #anchor="w",fg="white",bg="black", height=35, width=55)#NOVO WIDTH E HEIGHT FIXO
         #PESQUISAR COMO SE ADD SCROLLBAR PRA LABEL, SE TEM COMO OU ADD LABEL EM WINDOW E AIH BOTAR SCROLLBAR
         self.texto = Tkinter.Text(self, fg="white",bg="black", height=35, width=55)
-        self.texto.grid(column=0,row=1,columnspan=2,sticky='EW')
+        self.texto.grid(column=0,row=2,columnspan=3,sticky='EW')
         # create a Scrollbar and associate it with txt
         scrollb = Tkinter.Scrollbar(self, command=self.texto.yview)
-        scrollb.grid(row=1, column=1, sticky='nsew')
+        scrollb.grid(row=2, column=2, sticky='nsew')
         self.texto['yscrollcommand'] = scrollb.set        
         
         #label.grid(column=0,row=1,columnspan=2,sticky='EW')
@@ -47,15 +62,17 @@ class simpleapp_tk(Tkinter.Tk):
         self.geometry(self.geometry())          
         self.entry.focus_set()#textfield foca
         self.entry.selection_range(0, Tkinter.END)
+        
+        self.grid_columnconfigure(1, weight=1)
 
-    def Clear_textbox(self):
-        self.entry.delete(0, Tkinter.END)    
+    
+    
     
     def OnButtonClick(self):
         #self.labelVariable.set( self.labelVariable.get() + "\n" + self.entryVariable.get()+" (You clicked the button)" ) #muda o texto da labelVariable com o valor de entryVariable
         #self.texto.insert(Tkinter.END, self.entryVariable.get() + "\n")
         from AcharCompatibilidadeEntreAmigosTudoJunto import AcharCompatibilidadeEntreAmigosTudoJunto
-        achaCompatibilidade = AcharCompatibilidadeEntreAmigosTudoJunto(self.access_token, self)        
+        achaCompatibilidade = AcharCompatibilidadeEntreAmigosTudoJunto(self.accessTokenVariable.get(), self)        
         achaCompatibilidade.calcularCompatibilidadeEntreEsseAmigoETodosOsMeusAmigos(self.entryVariable.get())        
         self.entry.focus_set()#seleciona o texto todo assim que o usuário aperta botão ou enter
         self.entry.selection_range(0, Tkinter.END)        
@@ -64,7 +81,7 @@ class simpleapp_tk(Tkinter.Tk):
         #self.labelVariable.set( self.labelVariable.get() + "\n" + self.entryVariable.get()+" (You pressed ENTER)" ) #muda o texto da labelVariable com o valor de entryVariable
         #self.texto.insert(Tkinter.END, self.entryVariable.get() + "\n")
         from AcharCompatibilidadeEntreAmigosTudoJunto import AcharCompatibilidadeEntreAmigosTudoJunto
-        achaCompatibilidade = AcharCompatibilidadeEntreAmigosTudoJunto(self.access_token, self)        
+        achaCompatibilidade = AcharCompatibilidadeEntreAmigosTudoJunto(self.accessTokenVariable.get(), self)        
         achaCompatibilidade.calcularCompatibilidadeEntreEsseAmigoETodosOsMeusAmigos(self.entryVariable.get())        
         self.entry.focus_set()#seleciona o texto todo assim que o usuário aperta botão ou enter
         self.entry.selection_range(0, Tkinter.END)
