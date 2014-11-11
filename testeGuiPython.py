@@ -30,9 +30,13 @@ class simpleapp_tk(Tkinter.Tk):
         #label = Tkinter.Label(self,textvariable=self.labelVariable, # label que usa variável labelVariable como texto
                               #anchor="w",fg="white",bg="black", height=35, width=55)#NOVO WIDTH E HEIGHT FIXO
         #PESQUISAR COMO SE ADD SCROLLBAR PRA LABEL, SE TEM COMO OU ADD LABEL EM WINDOW E AIH BOTAR SCROLLBAR
-
         self.texto = Tkinter.Text(self, fg="white",bg="black", height=35, width=55)
         self.texto.grid(column=0,row=1,columnspan=2,sticky='EW')
+        # create a Scrollbar and associate it with txt
+        scrollb = Tkinter.Scrollbar(self, command=self.texto.yview)
+        scrollb.grid(row=0, column=1, sticky='nsew')
+        self.texto['yscrollcommand'] = scrollb.set        
+        
         #label.grid(column=0,row=1,columnspan=2,sticky='EW')
         self.labelVariable.set(u"Hello !")
         self.grid_columnconfigure(0,weight=1)#estica a coluna 1 mesmo com resize da janela
@@ -43,12 +47,13 @@ class simpleapp_tk(Tkinter.Tk):
         self.entry.selection_range(0, Tkinter.END)
     def OnButtonClick(self):
         #self.labelVariable.set( self.labelVariable.get() + "\n" + self.entryVariable.get()+" (You clicked the button)" ) #muda o texto da labelVariable com o valor de entryVariable
-        self.texto.insert('0.0', self.entryVariable.get() + "\n")
+        self.texto.insert(Tkinter.END, self.entryVariable.get() + "\n")
         self.entry.focus_set()#seleciona o texto todo assim que o usuário aperta botão ou enter
         self.entry.selection_range(0, Tkinter.END)        
         
     def OnPressEnter(self,event):
         #self.labelVariable.set( self.labelVariable.get() + "\n" + self.entryVariable.get()+" (You pressed ENTER)" ) #muda o texto da labelVariable com o valor de entryVariable
+        self.texto.insert(Tkinter.END, self.entryVariable.get() + "\n")        
         self.entry.focus_set()#seleciona o texto todo assim que o usuário aperta botão ou enter
         self.entry.selection_range(0, Tkinter.END)
 
