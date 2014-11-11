@@ -34,7 +34,7 @@ class simpleapp_tk(Tkinter.Tk):
         self.texto.grid(column=0,row=1,columnspan=2,sticky='EW')
         # create a Scrollbar and associate it with txt
         scrollb = Tkinter.Scrollbar(self, command=self.texto.yview)
-        scrollb.grid(row=0, column=1, sticky='nsew')
+        scrollb.grid(row=1, column=1, sticky='nsew')
         self.texto['yscrollcommand'] = scrollb.set        
         
         #label.grid(column=0,row=1,columnspan=2,sticky='EW')
