@@ -41,7 +41,7 @@ class simpleapp_tk(Tkinter.Tk):
         self.entry.bind("<Return>", self.OnPressEnter)#dispara onPressEnter quando enter é pressionado no ttext field              
         
         button = Tkinter.Button(self,text=u"Ver compatibilidade!",
-                                command=self.OnButtonClick)#botao clicavel dispara onButtonClick
+                                command=self.OnButtonClick,cursor="circle")#botao clicavel dispara onButtonClick
         button.grid(column=2,row=0, rowspan=2)
         self.labelVariable = Tkinter.StringVar()
         #label = Tkinter.Label(self,textvariable=self.labelVariable, # label que usa variável labelVariable como texto
