@@ -27,11 +27,13 @@ class simpleapp_tk(Tkinter.Tk):
                                 command=self.OnButtonClick)#botao clicavel dispara onButtonClick
         button.grid(column=1,row=0)
         self.labelVariable = Tkinter.StringVar()
-        label = Tkinter.Label(self,textvariable=self.labelVariable, # label que usa variável labelVariable como texto
-                              anchor="w",fg="white",bg="black", height=35, width=55)#NOVO WIDTH E HEIGHT FIXO
+        #label = Tkinter.Label(self,textvariable=self.labelVariable, # label que usa variável labelVariable como texto
+                              #anchor="w",fg="white",bg="black", height=35, width=55)#NOVO WIDTH E HEIGHT FIXO
         #PESQUISAR COMO SE ADD SCROLLBAR PRA LABEL, SE TEM COMO OU ADD LABEL EM WINDOW E AIH BOTAR SCROLLBAR
 
-        label.grid(column=0,row=1,columnspan=2,sticky='EW')
+        self.texto = Tkinter.Text(self, fg="white",bg="black", height=35, width=55)
+        self.texto.grid(column=0,row=1,columnspan=2,sticky='EW')
+        #label.grid(column=0,row=1,columnspan=2,sticky='EW')
         self.labelVariable.set(u"Hello !")
         self.grid_columnconfigure(0,weight=1)#estica a coluna 1 mesmo com resize da janela
         self.resizable(True,True)#soh ppode resize horizontalmente! vertical nao pode
@@ -40,12 +42,13 @@ class simpleapp_tk(Tkinter.Tk):
         self.entry.focus_set()#textfield foca
         self.entry.selection_range(0, Tkinter.END)
     def OnButtonClick(self):
-        self.labelVariable.set( self.labelVariable.get() + "\n" + self.entryVariable.get()+" (You clicked the button)" ) #muda o texto da labelVariable com o valor de entryVariable
+        #self.labelVariable.set( self.labelVariable.get() + "\n" + self.entryVariable.get()+" (You clicked the button)" ) #muda o texto da labelVariable com o valor de entryVariable
+        self.texto.insert('0.0', self.entryVariable.get() + "\n")
         self.entry.focus_set()#seleciona o texto todo assim que o usuário aperta botão ou enter
         self.entry.selection_range(0, Tkinter.END)        
         
     def OnPressEnter(self,event):
-        self.labelVariable.set( self.labelVariable.get() + "\n" + self.entryVariable.get()+" (You pressed ENTER)" ) #muda o texto da labelVariable com o valor de entryVariable
+        #self.labelVariable.set( self.labelVariable.get() + "\n" + self.entryVariable.get()+" (You pressed ENTER)" ) #muda o texto da labelVariable com o valor de entryVariable
         self.entry.focus_set()#seleciona o texto todo assim que o usuário aperta botão ou enter
         self.entry.selection_range(0, Tkinter.END)
 
