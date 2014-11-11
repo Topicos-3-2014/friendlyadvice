@@ -4,6 +4,7 @@ Created on Wed Oct 22 15:59:34 2014
 
 @author: FábioPhillip
 """
+from types import StringType
 
 class DadosDeAmigoEmComum:
     def __init__(self,notaCompatibilidade, coisasEmComumDosAmigos):
@@ -22,16 +23,20 @@ class DadosDeAmigoEmComum:
     def getCoisasEmComum(self):
         return self.coisasEmComum
         
-    def imprimirDadosDeAmigoEmComum(self):
-        print '---------------'
-        print "nota de compatibilidade=", self.notaDeCompatibilidade
-        print '---------------'
-        print '---------------'
-        print "coisas(likes, amigos) em comum entre eles:"
-        print "["
-        for elementoEmCoisasEmComum in self.coisasEmComum:
-            print elementoEmCoisasEmComum.encode(encoding='utf_8',errors='ignore'),","
+    def imprimirDadosDeAmigoEmComum(self, gui_python):
+        from testeGuiPython import simpleapp_tk
+        gui_python.AdicionarTextoParaGui('---------------')
+        gui_python.AdicionarTextoParaGui("nota de compatibilidade=" + str(self.notaDeCompatibilidade))
+        gui_python.AdicionarTextoParaGui('---------------')
+        gui_python.AdicionarTextoParaGui('---------------')
+        gui_python.AdicionarTextoParaGui("coisas(likes, amigos) em comum entre eles:")
+        gui_python.AdicionarTextoParaGui("[")
+        if(isinstance(self.coisasEmComum, StringType)):
+            gui_python.AdicionarTextoParaGui(self.coisasEmComum)
+        else:
+            for elementoEmCoisasEmComum in self.coisasEmComum:
+                gui_python.AdicionarTextoParaGui(str(elementoEmCoisasEmComum) + ",")
         
-        print "]"
+        gui_python.AdicionarTextoParaGui("]")
         #print self.coisasEmComum
         print '---------------'

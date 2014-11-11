@@ -5,11 +5,13 @@ Created on Mon Nov 10 22:14:47 2014
 
 @author: FábioPhillip
 """
-
 import Tkinter
 
 #TUTORIAL : http://sebsauvage.net/python/gui/
 class simpleapp_tk(Tkinter.Tk):
+
+    access_token = "CAACEdEose0cBAOav6INdmezgkbolLolLE4X9GlfWFrIaMJV1xrT3SbnV6DX90JzZBGP47sS5vUqrWX1ZCLrYZBfZB7sGXl2mDuju21hhtFUnB2fjmZCuO3V02YjVe8BKQ6Y6XByAuk3DoukeWw47Kwx1pRJBP7v3lO2KsC2EXdQRBPIMDW9GYqJX2JXOGa2JaTUe40joZBzUeAZBq4sZA98z"    
+    
     def __init__(self,parent):
         Tkinter.Tk.__init__(self,parent)
         self.parent = parent
@@ -21,7 +23,7 @@ class simpleapp_tk(Tkinter.Tk):
         self.entry = Tkinter.Entry(self,textvariable=self.entryVariable)#Entry é um nome de Textfield da tela
         self.entry.grid(column=0,row=0,sticky='EW')#EW é pra ele grudar nas edges
         self.entry.bind("<Return>", self.OnPressEnter)#dispara onPressEnter quando enter é pressionado no ttext field        
-        self.entryVariable.set(u"Enter text here.")        
+        self.entryVariable.set(u"Entre com o nome do amigo que você quer convidar pra sair")        
         
         button = Tkinter.Button(self,text=u"Ver compatibilidade!",
                                 command=self.OnButtonClick)#botao clicavel dispara onButtonClick
@@ -45,17 +47,34 @@ class simpleapp_tk(Tkinter.Tk):
         self.geometry(self.geometry())          
         self.entry.focus_set()#textfield foca
         self.entry.selection_range(0, Tkinter.END)
+
+    def Clear_textbox(self):
+        self.entry.delete(0, Tkinter.END)    
+    
     def OnButtonClick(self):
         #self.labelVariable.set( self.labelVariable.get() + "\n" + self.entryVariable.get()+" (You clicked the button)" ) #muda o texto da labelVariable com o valor de entryVariable
-        self.texto.insert(Tkinter.END, self.entryVariable.get() + "\n")
+        #self.texto.insert(Tkinter.END, self.entryVariable.get() + "\n")
+        from AcharCompatibilidadeEntreAmigosTudoJunto import AcharCompatibilidadeEntreAmigosTudoJunto
+        achaCompatibilidade = AcharCompatibilidadeEntreAmigosTudoJunto(self.access_token, self)        
+        achaCompatibilidade.calcularCompatibilidadeEntreEsseAmigoETodosOsMeusAmigos(self.entryVariable.get())        
         self.entry.focus_set()#seleciona o texto todo assim que o usuário aperta botão ou enter
         self.entry.selection_range(0, Tkinter.END)        
         
     def OnPressEnter(self,event):
         #self.labelVariable.set( self.labelVariable.get() + "\n" + self.entryVariable.get()+" (You pressed ENTER)" ) #muda o texto da labelVariable com o valor de entryVariable
-        self.texto.insert(Tkinter.END, self.entryVariable.get() + "\n")        
+        #self.texto.insert(Tkinter.END, self.entryVariable.get() + "\n")
+        from AcharCompatibilidadeEntreAmigosTudoJunto import AcharCompatibilidadeEntreAmigosTudoJunto
+        achaCompatibilidade = AcharCompatibilidadeEntreAmigosTudoJunto(self.access_token, self)        
+        achaCompatibilidade.calcularCompatibilidadeEntreEsseAmigoETodosOsMeusAmigos(self.entryVariable.get())        
         self.entry.focus_set()#seleciona o texto todo assim que o usuário aperta botão ou enter
         self.entry.selection_range(0, Tkinter.END)
+    
+    def AdicionarTextoParaGui(self, texto_adicionar):
+        texto_add_em_string = str(texto_adicionar)
+        self.texto.insert(Tkinter.END, texto_add_em_string + "\n")
+        self.entry.focus_set()#seleciona o texto todo assim que o usuário aperta botão ou enter
+        self.entry.selection_range(0, Tkinter.END)
+    
 
 if __name__ == "__main__":
     app = simpleapp_tk(None)
