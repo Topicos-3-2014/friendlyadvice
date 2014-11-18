@@ -40,17 +40,27 @@ class AcharCompatibilidadeEntreAmigosTudoJunto:
                 if(umOutroAmigo in self.amigosEAfinidadesLikes.keys()):
                     umOutroAmigoTemLikesEmComum = True
                     quantosCriteriosUmOutroAmigoCobre =  quantosCriteriosUmOutroAmigoCobre + 1.0
+                else:
+                    quantosCriteriosUmOutroAmigoCobre =  quantosCriteriosUmOutroAmigoCobre + 1.0
                 if(umOutroAmigo in self.amigosEAfinidadesLocalidade.keys()):
                     umOutroAmigoTemLocalidadeEmComum = True
+                    quantosCriteriosUmOutroAmigoCobre =  quantosCriteriosUmOutroAmigoCobre + 1.0
+                else:
                     quantosCriteriosUmOutroAmigoCobre =  quantosCriteriosUmOutroAmigoCobre + 1.0
                 if(umOutroAmigo in self.amigosEAfinidadesEscola.keys()):
                     umOutroAmigoTemEscolaEmComum = True
                     quantosCriteriosUmOutroAmigoCobre =  quantosCriteriosUmOutroAmigoCobre + 1.0
+                else:
+                    quantosCriteriosUmOutroAmigoCobre =  quantosCriteriosUmOutroAmigoCobre + 1.0
                 if(umOutroAmigo in self.amigosEAfinidadesIdade.keys()):
                     umOutroAmigoTemIdadeEmComum = True
                     quantosCriteriosUmOutroAmigoCobre =  quantosCriteriosUmOutroAmigoCobre + 1.0
+                else:
+                    quantosCriteriosUmOutroAmigoCobre =  quantosCriteriosUmOutroAmigoCobre + 1.0
                 if(umOutroAmigo in self.amigosEAfinidadesAmigosMutuos.keys()):
                     umOutroAmigoTemAmigosMutuosEmComum = True
+                    quantosCriteriosUmOutroAmigoCobre =  quantosCriteriosUmOutroAmigoCobre + 1.0
+                else:
                     quantosCriteriosUmOutroAmigoCobre =  quantosCriteriosUmOutroAmigoCobre + 1.0
                 
                 self.gui_python.AdicionarTextoParaGui("!!!!!!!!!!!!!!!!!!!!!!!! NOVO AMIGO !!!!!!!!!!!!!!!!!!!")
